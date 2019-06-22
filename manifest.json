@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Google Container Shortcut",
+  "version": "1.0",
+  "description": "Easy Google Container Shortcut",
+  "applications": {
+    "gecko": {
+      "id": "firefox.google.container.shortcut@ayusaxena.com"
+    }
+  },
+  "icons": {
+    "48": "assets/icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "contextualIdentities",
+    "cookies"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "commands": {
+    "ecs-new-tab-container-6": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+6",
+        "mac": "Alt+Shift+T"
+      },
+      "description": "Open a tab in the Google container"
+    }
+  }
+}
