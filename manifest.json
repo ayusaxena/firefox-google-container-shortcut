@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Google Container Shortcut",
-  "version": "1.0",
-  "description": "Easy Google Container Shortcut",
+  "version": "1.2",
+  "description": "Google Container Shortcut",
   "applications": {
     "gecko": {
       "id": "firefox.google.container.shortcut@ayusaxena.com"
@@ -20,12 +20,19 @@
     "scripts": ["background.js"]
   },
   "commands": {
-    "ecs-new-tab-container-6": {
+    "open-google-container": {
       "suggested_key": {
-        "default": "Ctrl+Shift+6",
-        "mac": "Alt+Shift+T"
+        "default": "Ctrl+Y",
+        "mac": "Command+Y"
       },
       "description": "Open a tab in the Google container"
+    }
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "assets/icon.png",
+      "32": "assets/icon.png"
     }
   }
 }
