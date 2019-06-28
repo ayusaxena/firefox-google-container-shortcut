@@ -14,7 +14,11 @@
   "permissions": [
     "tabs",
     "contextualIdentities",
-    "cookies"
+    "cookies",
+    "webRequest",
+    "webRequestBlocking",
+    "webNavigation",
+    "browsingData"
   ],
   "background": {
     "scripts": ["background.js"]
