@@ -11,14 +11,17 @@
   "icons": {
     "48": "assets/icon.png"
   },
+  "options_ui": {
+    "browser_style": true,
+    "page": "options.html"
+  },
   "permissions": [
     "tabs",
     "contextualIdentities",
     "cookies",
+    "storage",
     "webRequest",
-    "webRequestBlocking",
-    "webNavigation",
-    "browsingData"
+    "<all_urls>"
   ],
   "background": {
     "scripts": ["background.js"]
