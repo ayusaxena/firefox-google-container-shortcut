@@ -9,7 +9,7 @@ function getContexts() {
 }
 
 async function setupOrFetchContainer () {
-  // Use existing Google container, or create one
+  // use existing Google container, or create one
   const contexts = await browser.contextualIdentities.query({name: GOOGLE_CONTAINER_NAME});
   if (contexts.length > 0) {
     googleCookieStoreId = contexts[0].cookieStoreId;
@@ -25,9 +25,11 @@ async function setupOrFetchContainer () {
 }
 
 async function openGoogleContainerTab(currentTab) {
+  // open a new tab in Google container
   googleContextId = await setupOrFetchContainer();
   opt = await browser.storage.local.get("choice");
   if (opt.choice == "manual" && currentTab != "open-google-container") {
+    // manual mode, remove the container
     if (currentTab.cookieStoreId != "firefox-default") {
       browser.tabs.remove(currentTab.id);
       return browser.tabs.create({
@@ -42,6 +44,7 @@ async function openGoogleContainerTab(currentTab) {
 }
 
 function makeFreeTab(tab, oldTab) {
+  // in auto mode remove the container when regex is false
   browser.tabs.remove(tab.tabId);
   browser.tabs.create({
     url: tab.url,
@@ -51,6 +54,7 @@ function makeFreeTab(tab, oldTab) {
 }
 
 async function logTab(requestDetails) {
+  // intercept web requests to remove containers in auto mode
   googleContextId = await setupOrFetchContainer();
   opt = await browser.storage.local.get("choice");
   tabInfo = await browser.tabs.get(requestDetails.tabId);
