@@ -33,7 +33,8 @@ async function openGoogleContainerTab(currentTab) {
     if (currentTab.cookieStoreId != "firefox-default") {
       browser.tabs.remove(currentTab.id);
       return browser.tabs.create({
-        url: currentTab.url
+        url: currentTab.url,
+        index: currentTab.index
       })
     }
   }
@@ -65,9 +66,36 @@ async function logTab(requestDetails) {
   }
 }
 
+async function sendSelection (selection, tab) {
+  // search text/link selection in container
+  googleContextId = await setupOrFetchContainer();
+  if ('linkText' in selection){
+    selection.selectionText = selection.linkText;
+  }
+  browser.tabs.create({
+    cookieStoreId: googleContextId,
+    url: encodeURI("https://www.google.com/search?q=" + selection.selectionText),
+    index: tab.index + 1
+  });
+}
+
+// create contextMenus
+browser.contextMenus.create({
+  id: 'search-in-container',
+  title: 'Search for "%s" in Google Container',
+  contexts: ['selection']
+});
+
+browser.contextMenus.create({
+  id: 'search-link-container',
+  title: 'Search link text in Google Container',
+  contexts: ['link']
+});
+
 // [COMMANDS] register commands
 browser.commands.onCommand.addListener(openGoogleContainerTab);
 browser.browserAction.onClicked.addListener(openGoogleContainerTab);
+browser.contextMenus.onClicked.addListener(sendSelection)
 browser.webRequest.onBeforeRequest.addListener(
   logTab,
   {urls: ["<all_urls>"], types: ["main_frame"]}
