@@ -29,8 +29,8 @@ async function openGoogleContainerTab(currentTab) {
   googleContextId = await setupOrFetchContainer();
   opt = await browser.storage.local.get("choice");
   if (opt.choice == "manual" && currentTab != "open-google-container") {
-    // manual mode, remove the container
-    if (currentTab.cookieStoreId != "firefox-default") {
+    // on button click in manual mode, remove the container if not a Google tab
+    if (currentTab.cookieStoreId != "firefox-default" && !(re.test(currentTab.url))) {
       browser.tabs.remove(currentTab.id);
       return browser.tabs.create({
         url: currentTab.url,
@@ -49,7 +49,7 @@ function makeFreeTab(tab, oldTab) {
   browser.tabs.remove(tab.tabId);
   browser.tabs.create({
     url: tab.url,
-    index: oldTab.index,
+    index: oldTab.index + 1,
     active: oldTab.active
   });
 }
@@ -60,7 +60,7 @@ async function logTab(requestDetails) {
   opt = await browser.storage.local.get("choice");
   tabInfo = await browser.tabs.get(requestDetails.tabId);
   if (opt.choice == "auto") {
-    if (re.test(requestDetails.url) == false && tabInfo.cookieStoreId == googleContextId) {
+    if (!(re.test(requestDetails.url)) && tabInfo.cookieStoreId == googleContextId) {
       makeFreeTab(requestDetails, tabInfo);
     }
   }
