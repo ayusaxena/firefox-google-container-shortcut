@@ -30,7 +30,7 @@ async function openGoogleContainerTab(currentTab) {
   opt = await browser.storage.local.get("choice");
   if (opt.choice == "manual" && currentTab != "open-google-container") {
     // on button click in manual mode, remove the container if not a Google tab
-    if (currentTab.cookieStoreId != "firefox-default" && !(re.test(currentTab.url))) {
+    if (currentTab.cookieStoreId == googleContextId && !(re.test(currentTab.url))) {
       browser.tabs.remove(currentTab.id);
       return browser.tabs.create({
         url: currentTab.url,
@@ -66,10 +66,10 @@ async function logTab(requestDetails) {
   }
 }
 
-async function sendSelection (selection, tab) {
+async function searchSelection (selection, tab) {
   // search text/link selection in container
   googleContextId = await setupOrFetchContainer();
-  if ('linkText' in selection){
+  if (!('selectionText' in selection)) {
     selection.selectionText = selection.linkText;
   }
   browser.tabs.create({
@@ -95,7 +95,7 @@ browser.contextMenus.create({
 // [COMMANDS] register commands
 browser.commands.onCommand.addListener(openGoogleContainerTab);
 browser.browserAction.onClicked.addListener(openGoogleContainerTab);
-browser.contextMenus.onClicked.addListener(sendSelection)
+browser.contextMenus.onClicked.addListener(searchSelection)
 browser.webRequest.onBeforeRequest.addListener(
   logTab,
   {urls: ["<all_urls>"], types: ["main_frame"]}
