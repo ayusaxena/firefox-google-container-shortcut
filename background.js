@@ -74,7 +74,7 @@ async function searchSelection (selection, tab) {
   }
   browser.tabs.create({
     cookieStoreId: googleContextId,
-    url: encodeURI("https://www.google.com/search?q=" + selection.selectionText),
+    url: "https://www.google.com/search?q=" + encodeURIComponent(selection.selectionText),
     index: tab.index + 1
   });
 }
