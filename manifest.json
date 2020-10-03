@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Google Container Shortcut",
-  "version": "1.5",
+  "version": "1.6",
   "description": "Open Google containers using a dedicated button or a keyboard shortcut.",
   "applications": {
     "gecko": {
@@ -31,8 +31,8 @@
   "commands": {
     "open-google-container": {
       "suggested_key": {
-        "default": "Ctrl+Y",
-        "mac": "Command+Y"
+        "default": "Alt+E",
+        "mac": "Alt+E"
       },
       "description": "Open a tab in the Google container"
     }

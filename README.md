@@ -8,6 +8,6 @@ It creates a new Google container if it doesn't exist, or just uses the existing
 
 Press the Add-on button in the toolbar or use the key shortcut:
 
-Windows/Linux: `Ctrl + Y`
+Windows/Linux: `Alt + T`
 
-Mac: `Command + Y`
+Mac: `Option + T`
